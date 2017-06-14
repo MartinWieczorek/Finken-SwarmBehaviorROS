@@ -1,0 +1,8 @@
+prefix=/home/finken/Development/paparazzi_SBE/catkin_ws/install
+
+Name: swarmlab_tracking
+Description: Description of swarmlab_tracking
+Version: 0.1.0
+Cflags: 
+Libs: -L/home/finken/Development/paparazzi_SBE/catkin_ws/install/lib 
+Requires: 

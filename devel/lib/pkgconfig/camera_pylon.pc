@@ -1,0 +1,8 @@
+prefix=/home/finken/Development/paparazzi_SBE/catkin_ws/devel
+
+Name: camera_pylon
+Description: Description of camera_pylon
+Version: 0.0.1
+Cflags: -I/home/finken/Development/paparazzi_SBE/catkin_ws/devel/include
+Libs: -L/home/finken/Development/paparazzi_SBE/catkin_ws/devel/lib 
+Requires: image_transport cv_bridge camera_info_manager sensor_msgs
