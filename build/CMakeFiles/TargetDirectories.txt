@@ -3,6 +3,7 @@
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/tracking/CMakeFiles/_run_tests_tracking_nosetests.dir
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/tracking/CMakeFiles/_run_tests_tracking_nosetests_test.dir
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/tracking/CMakeFiles/_tracking_generate_messages_check_deps_TaggedPose2D.dir
+/home/finken/Development/paparazzi_SBE/catkin_ws/build/using_markers/CMakeFiles/basic_shapes.dir
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/camera_pylon/CMakeFiles/cam_node.dir
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles/clean_test_results.dir
@@ -45,3 +46,6 @@
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/tracking/CMakeFiles/tracking_genlisp.dir
 /home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/tracking/CMakeFiles/tracking_genpy.dir
+/home/finken/Development/paparazzi_SBE/catkin_ws/build/using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir
+/home/finken/Development/paparazzi_SBE/catkin_ws/build/using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir
+/home/finken/Development/paparazzi_SBE/catkin_ws/build/using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir

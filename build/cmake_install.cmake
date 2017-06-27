@@ -121,6 +121,7 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   INCLUDE("/home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/tracking/cmake_install.cmake")
   INCLUDE("/home/finken/Development/paparazzi_SBE/catkin_ws/build/SBE-AttrRep/cmake_install.cmake")
   INCLUDE("/home/finken/Development/paparazzi_SBE/catkin_ws/build/CameraTracking/camera_pylon/cmake_install.cmake")
+  INCLUDE("/home/finken/Development/paparazzi_SBE/catkin_ws/build/using_markers/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

@@ -1,2 +1,2 @@
-CameraTracking/camera_pylon:CameraTracking/tracking:SBE-AttrRep:swarmlab_tracking
+CameraTracking/camera_pylon:CameraTracking/tracking:SBE-AttrRep:swarmlab_tracking:using_markers
 -DCATKIN_DEVEL_PREFIX=/home/finken/Development/paparazzi_SBE/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/finken/Development/paparazzi_SBE/catkin_ws/install -G Unix Makefiles

@@ -23,6 +23,8 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "catkin_generated/installspace/_setup_util.py"
   "catkin_generated/order_packages.cmake"
   "swarmlab_tracking/catkin_generated/package.cmake"
+  "using_markers/catkin_generated/ordered_paths.cmake"
+  "using_markers/catkin_generated/package.cmake"
   "/home/finken/Development/paparazzi_SBE/catkin_ws/devel/share/tracking/cmake/tracking-msg-paths.cmake"
   "/home/finken/Development/paparazzi_SBE/catkin_ws/src/CMakeLists.txt"
   "/home/finken/Development/paparazzi_SBE/catkin_ws/src/CameraTracking/camera_pylon/CMakeLists.txt"
@@ -33,6 +35,8 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "/home/finken/Development/paparazzi_SBE/catkin_ws/src/SBE-AttrRep/package.xml"
   "/home/finken/Development/paparazzi_SBE/catkin_ws/src/swarmlab_tracking/CMakeLists.txt"
   "/home/finken/Development/paparazzi_SBE/catkin_ws/src/swarmlab_tracking/package.xml"
+  "/home/finken/Development/paparazzi_SBE/catkin_ws/src/using_markers/CMakeLists.txt"
+  "/home/finken/Development/paparazzi_SBE/catkin_ws/src/using_markers/package.xml"
   "/opt/ros/indigo/share/camera_info_manager/cmake/camera_info_managerConfig-version.cmake"
   "/opt/ros/indigo/share/camera_info_manager/cmake/camera_info_managerConfig.cmake"
   "/opt/ros/indigo/share/catkin/cmake/../package.xml"
@@ -163,6 +167,9 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "/opt/ros/indigo/share/std_msgs/cmake/std_msgs-msg-paths.cmake"
   "/opt/ros/indigo/share/std_msgs/cmake/std_msgsConfig-version.cmake"
   "/opt/ros/indigo/share/std_msgs/cmake/std_msgsConfig.cmake"
+  "/opt/ros/indigo/share/visualization_msgs/cmake/visualization_msgs-msg-extras.cmake"
+  "/opt/ros/indigo/share/visualization_msgs/cmake/visualization_msgsConfig-version.cmake"
+  "/opt/ros/indigo/share/visualization_msgs/cmake/visualization_msgsConfig.cmake"
   "/opt/ros/indigo/share/xmlrpcpp/cmake/xmlrpcppConfig-version.cmake"
   "/opt/ros/indigo/share/xmlrpcpp/cmake/xmlrpcppConfig.cmake"
   "/usr/share/OpenCV/OpenCVConfig-version.cmake"
@@ -222,6 +229,7 @@ SET(CMAKE_MAKEFILE_PRODUCTS
   "CameraTracking/tracking/CMakeFiles/CMakeDirectoryInformation.cmake"
   "SBE-AttrRep/CMakeFiles/CMakeDirectoryInformation.cmake"
   "CameraTracking/camera_pylon/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "using_markers/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -273,4 +281,8 @@ SET(CMAKE_DEPEND_INFO_FILES
   "CameraTracking/camera_pylon/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/DependInfo.cmake"
   "CameraTracking/camera_pylon/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/DependInfo.cmake"
   "CameraTracking/camera_pylon/CMakeFiles/sensor_msgs_generate_messages_py.dir/DependInfo.cmake"
+  "using_markers/CMakeFiles/basic_shapes.dir/DependInfo.cmake"
+  "using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/DependInfo.cmake"
+  "using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/DependInfo.cmake"
+  "using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/DependInfo.cmake"
   )

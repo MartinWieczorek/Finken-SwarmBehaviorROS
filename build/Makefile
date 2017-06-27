@@ -760,6 +760,58 @@ sensor_msgs_generate_messages_py/fast:
 	$(MAKE) -f CameraTracking/camera_pylon/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make CameraTracking/camera_pylon/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
 .PHONY : sensor_msgs_generate_messages_py/fast
 
+#=============================================================================
+# Target rules for targets named basic_shapes
+
+# Build rule for target.
+basic_shapes: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 basic_shapes
+.PHONY : basic_shapes
+
+# fast build rule for target.
+basic_shapes/fast:
+	$(MAKE) -f using_markers/CMakeFiles/basic_shapes.dir/build.make using_markers/CMakeFiles/basic_shapes.dir/build
+.PHONY : basic_shapes/fast
+
+#=============================================================================
+# Target rules for targets named visualization_msgs_generate_messages_cpp
+
+# Build rule for target.
+visualization_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_cpp
+.PHONY : visualization_msgs_generate_messages_cpp
+
+# fast build rule for target.
+visualization_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build
+.PHONY : visualization_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named visualization_msgs_generate_messages_lisp
+
+# Build rule for target.
+visualization_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_lisp
+.PHONY : visualization_msgs_generate_messages_lisp
+
+# fast build rule for target.
+visualization_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build
+.PHONY : visualization_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named visualization_msgs_generate_messages_py
+
+# Build rule for target.
+visualization_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_py
+.PHONY : visualization_msgs_generate_messages_py
+
+# fast build rule for target.
+visualization_msgs_generate_messages_py/fast:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/build
+.PHONY : visualization_msgs_generate_messages_py/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -820,6 +872,10 @@ help:
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_py"
+	@echo "... basic_shapes"
+	@echo "... visualization_msgs_generate_messages_cpp"
+	@echo "... visualization_msgs_generate_messages_lisp"
+	@echo "... visualization_msgs_generate_messages_py"
 .PHONY : help
 
 

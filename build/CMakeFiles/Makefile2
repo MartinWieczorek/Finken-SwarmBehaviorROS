@@ -230,7 +230,7 @@ gtest/preinstall:
 gtest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  3
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  4
 	@echo "Built target gtest"
 .PHONY : gtest/CMakeFiles/gtest.dir/all
 
@@ -261,7 +261,7 @@ clean: gtest/CMakeFiles/gtest.dir/clean
 gtest/CMakeFiles/gtest_main.dir/all: gtest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  4
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  5
 	@echo "Built target gtest_main"
 .PHONY : gtest/CMakeFiles/gtest_main.dir/all
 
@@ -740,9 +740,9 @@ clean: CameraTracking/tracking/CMakeFiles/tracking_gencpp.dir/clean
 # Target rules for target CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir
 
 # All Build rule for target.
-CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/all: CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/all
 CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/all: CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/all
 CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/all: CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/all
+CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/all: CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/all
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/depend
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 
@@ -777,11 +777,11 @@ clean: CameraTracking/tracking/CMakeFiles/tracking_generate_messages.dir/clean
 # Target rules for target CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir
 
 # All Build rule for target.
-CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/all: CameraTracking/tracking/CMakeFiles/_tracking_generate_messages_check_deps_TaggedPose2D.dir/all
 CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/all: CameraTracking/tracking/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/all: CameraTracking/tracking/CMakeFiles/_tracking_generate_messages_check_deps_TaggedPose2D.dir/all
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/depend
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  5
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  6
 	@echo "Built target tracking_generate_messages_cpp"
 .PHONY : CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/all
 
@@ -809,11 +809,11 @@ clean: CameraTracking/tracking/CMakeFiles/tracking_generate_messages_cpp.dir/cle
 # Target rules for target CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir
 
 # All Build rule for target.
-CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/all: CameraTracking/tracking/CMakeFiles/_tracking_generate_messages_check_deps_TaggedPose2D.dir/all
 CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/all: CameraTracking/tracking/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/all: CameraTracking/tracking/CMakeFiles/_tracking_generate_messages_check_deps_TaggedPose2D.dir/all
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/depend
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  6
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  7
 	@echo "Built target tracking_generate_messages_lisp"
 .PHONY : CameraTracking/tracking/CMakeFiles/tracking_generate_messages_lisp.dir/all
 
@@ -845,7 +845,7 @@ CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/all: Camera
 CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/all: CameraTracking/tracking/CMakeFiles/_tracking_generate_messages_check_deps_TaggedPose2D.dir/all
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/depend
 	$(MAKE) -f CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/build.make CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  7 8
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  8 9
 	@echo "Built target tracking_generate_messages_py"
 .PHONY : CameraTracking/tracking/CMakeFiles/tracking_generate_messages_py.dir/all
 
@@ -1174,7 +1174,7 @@ CameraTracking/camera_pylon/preinstall:
 CameraTracking/camera_pylon/CMakeFiles/cam_node.dir/all: CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir/all
 	$(MAKE) -f CameraTracking/camera_pylon/CMakeFiles/cam_node.dir/build.make CameraTracking/camera_pylon/CMakeFiles/cam_node.dir/depend
 	$(MAKE) -f CameraTracking/camera_pylon/CMakeFiles/cam_node.dir/build.make CameraTracking/camera_pylon/CMakeFiles/cam_node.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  2
 	@echo "Built target cam_node"
 .PHONY : CameraTracking/camera_pylon/CMakeFiles/cam_node.dir/all
 
@@ -1209,7 +1209,7 @@ clean: CameraTracking/camera_pylon/CMakeFiles/cam_node.dir/clean
 CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir/all:
 	$(MAKE) -f CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir/build.make CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir/depend
 	$(MAKE) -f CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir/build.make CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  3
 	@echo "Built target camera_pylon_gencfg"
 .PHONY : CameraTracking/camera_pylon/CMakeFiles/camera_pylon_gencfg.dir/all
 
@@ -1638,6 +1638,152 @@ CameraTracking/camera_pylon/CMakeFiles/sensor_msgs_generate_messages_py.dir/clea
 
 # clean rule for target.
 clean: CameraTracking/camera_pylon/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory using_markers
+
+# Convenience name for "all" pass in the directory.
+using_markers/all: using_markers/CMakeFiles/basic_shapes.dir/all
+.PHONY : using_markers/all
+
+# Convenience name for "clean" pass in the directory.
+using_markers/clean: using_markers/CMakeFiles/basic_shapes.dir/clean
+using_markers/clean: using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/clean
+using_markers/clean: using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/clean
+using_markers/clean: using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/clean
+.PHONY : using_markers/clean
+
+# Convenience name for "preinstall" pass in the directory.
+using_markers/preinstall:
+.PHONY : using_markers/preinstall
+
+#=============================================================================
+# Target rules for target using_markers/CMakeFiles/basic_shapes.dir
+
+# All Build rule for target.
+using_markers/CMakeFiles/basic_shapes.dir/all:
+	$(MAKE) -f using_markers/CMakeFiles/basic_shapes.dir/build.make using_markers/CMakeFiles/basic_shapes.dir/depend
+	$(MAKE) -f using_markers/CMakeFiles/basic_shapes.dir/build.make using_markers/CMakeFiles/basic_shapes.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles  1
+	@echo "Built target basic_shapes"
+.PHONY : using_markers/CMakeFiles/basic_shapes.dir/all
+
+# Include target in all.
+all: using_markers/CMakeFiles/basic_shapes.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+using_markers/CMakeFiles/basic_shapes.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 using_markers/CMakeFiles/basic_shapes.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 0
+.PHONY : using_markers/CMakeFiles/basic_shapes.dir/rule
+
+# Convenience name for target.
+basic_shapes: using_markers/CMakeFiles/basic_shapes.dir/rule
+.PHONY : basic_shapes
+
+# clean rule for target.
+using_markers/CMakeFiles/basic_shapes.dir/clean:
+	$(MAKE) -f using_markers/CMakeFiles/basic_shapes.dir/build.make using_markers/CMakeFiles/basic_shapes.dir/clean
+.PHONY : using_markers/CMakeFiles/basic_shapes.dir/clean
+
+# clean rule for target.
+clean: using_markers/CMakeFiles/basic_shapes.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir
+
+# All Build rule for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/all:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/depend
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 
+	@echo "Built target visualization_msgs_generate_messages_cpp"
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/all
+
+# Build rule for subdir invocation for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 0
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+visualization_msgs_generate_messages_cpp: using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/rule
+.PHONY : visualization_msgs_generate_messages_cpp
+
+# clean rule for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/clean:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/clean
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/clean
+
+# clean rule for target.
+clean: using_markers/CMakeFiles/visualization_msgs_generate_messages_cpp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir
+
+# All Build rule for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/all:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/depend
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 
+	@echo "Built target visualization_msgs_generate_messages_lisp"
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/all
+
+# Build rule for subdir invocation for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 0
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+visualization_msgs_generate_messages_lisp: using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/rule
+.PHONY : visualization_msgs_generate_messages_lisp
+
+# clean rule for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/clean:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/clean
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/clean
+
+# clean rule for target.
+clean: using_markers/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir
+
+# All Build rule for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/all:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/depend
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 
+	@echo "Built target visualization_msgs_generate_messages_py"
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/all
+
+# Build rule for subdir invocation for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/finken/Development/paparazzi_SBE/catkin_ws/build/CMakeFiles 0
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+visualization_msgs_generate_messages_py: using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/rule
+.PHONY : visualization_msgs_generate_messages_py
+
+# clean rule for target.
+using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/clean:
+	$(MAKE) -f using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/build.make using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/clean
+.PHONY : using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/clean
+
+# clean rule for target.
+clean: using_markers/CMakeFiles/visualization_msgs_generate_messages_py.dir/clean
 .PHONY : clean
 
 #=============================================================================
