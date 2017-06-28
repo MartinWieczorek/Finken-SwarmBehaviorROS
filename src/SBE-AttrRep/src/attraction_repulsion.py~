@@ -53,8 +53,8 @@ def marker_calc(copterPos, force, namespace):
 
     F = math.sqrt((force[0] * force[0]) + (force[1] * force[1]))
 
-    markerArrow.scale.x = 0.5 * abs (F) #length
-    markerArrow.scale.y = 0.2 * abs (F)#width
+    markerArrow.scale.x = 0.1 #* abs (F) #length
+    markerArrow.scale.y = 0.2 # * abs (F) #width
     markerArrow.scale.z = 0.2 #height
 
     markerArrow.color.a = 1.0
@@ -63,14 +63,14 @@ def marker_calc(copterPos, force, namespace):
     markerArrow.color.b = 0.0
    
     #Setting marker position
-    markerArrow.pose.orientation.w = - 0.5
-    markerArrow.pose.orientation.x = 0.0
-    markerArrow.pose.orientation.y = 0.0
-    markerArrow.pose.orientation.z = 0.0
+    #markerArrow.pose.orientation.w = - 0.5
+    #markerArrow.pose.orientation.x = 0.0
+    #markerArrow.pose.orientation.y = 0.0
+    #markerArrow.pose.orientation.z = 0.0
 
-    markerArrow.pose.position.x = copterPos.x
-    markerArrow.pose.position.y = copterPos.y
-    markerArrow.pose.position.z = 0.1
+    #markerArrow.pose.position.x = copterPos.x
+    #markerArrow.pose.position.y = copterPos.y
+    #markerArrow.pose.position.z = 0.1
     
     start = geometry_msgs.msg.Point()
     start.x = copterPos.x
@@ -80,15 +80,15 @@ def marker_calc(copterPos, force, namespace):
     end.x = copterPos.x + ( force[0] ) 
     end.y = copterPos.y + ( force[1] ) 
     end.z = 0.0
-    #markerArrow.points.append(start)
-    #markerArrow.points.append(end)
+    markerArrow.points.append(start)
+    markerArrow.points.append(end)
     markerArray.markers.append(markerArrow)
 
     publisher.publish(markerArray)
 
 def calcForce(copterPos0, copterPos1):
     cons = 1
-    d=0.9 #safe distance between the copters
+    d=2.0 #safe distance between the copters
     diff_x = copterPos1.x - copterPos0.x
     rospy.loginfo("copter0PoseX %f   - copter1PoseX %f   = diff_x %f", copterPos0.x, copterPos1.x, diff_x)
     diff_y = copterPos1.y - copterPos0.y
