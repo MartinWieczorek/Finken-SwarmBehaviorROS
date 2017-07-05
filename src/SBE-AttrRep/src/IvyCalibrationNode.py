@@ -45,10 +45,13 @@ class IvyCalibrationNode:
     def handlePos(self, data):
         """ Callback for the ROS subscriber.
 
+
         """
         global copterPos
         copterPos=data
-        self.IvySendRemoteGPS(5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+                             #AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
+        self.IvySendRemoteGPS(1,     0,     384202400 + (data.x*10), 79186300 + (data.y*10), 501229700,      0,   0,   0,   0,    0,       0,       0,       0,   0)
 
 
     def initRosSub(self):
@@ -129,7 +132,7 @@ class IvyCalibrationNode:
 
 
     def IvySendRemoteGPS(self, AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course):
-        IvySendMsg('dl COPTERPOSE %d %d %d %d %d %d %d %d %d %d %d %d %d %d' %
+        IvySendMsg('dl REMOTE_GPS %d %d %d %d %d %d %d %d %d %d %d %d %d %d' %
                     (AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
                     ))
 
