@@ -87,14 +87,17 @@ def marker_calc(copterPos, force, namespace):
     publisher.publish(markerArray)
 
 def calcForce(copterPos0, copterPos1):
-    cons = 1
-    d=0.5 #safe distance between the copters
+    cons = 0.5
+    d= 0.9 #safe distance between the copters
     diff_x = copterPos1.x - copterPos0.x
     rospy.loginfo("copter0PoseX %f   - copter1PoseX %f   = diff_x %f", copterPos0.x, copterPos1.x, diff_x)
     diff_y = copterPos1.y - copterPos0.y
     rospy.loginfo("copter0PoseY %f   - copter1PoseY %f   = diff_y %f", copterPos0.y, copterPos1.y, diff_y)
     dist = math.sqrt((diff_x*diff_x) + (diff_y*diff_y))
 
+    if (dist < d):
+        cons = 3.0
+    
     Fx = - cons*(dist-d) * diff_x
     Fy = - cons*(dist-d) * diff_y
     rospy.loginfo("Fx= %f , Fy= %f", Fx, Fy)

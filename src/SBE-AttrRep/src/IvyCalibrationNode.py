@@ -48,7 +48,7 @@ class IvyCalibrationNode:
         """
         global copterPos
         copterPos=data
-        self.IvySendCopterPose(5, copterPos.x, copterPos.y, copterPos.theta)
+        self.IvySendRemoteGPS(5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 
     def initRosSub(self):
@@ -126,6 +126,13 @@ class IvyCalibrationNode:
         IvySendMsg('dl COPTERPOSE %d %f %f %f' %
                     (AC_ID, posX, posY, theta
                     ))
+
+
+    def IvySendRemoteGPS(self, AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course):
+        IvySendMsg('dl COPTERPOSE %d %d %d %d %d %d %d %d %d %d %d %d %d %d' %
+                    (AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
+                    ))
+
 
 
     def IvySendUnKill(self, AC_ID):
