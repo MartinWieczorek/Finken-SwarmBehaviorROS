@@ -33,6 +33,15 @@ class IvyCalibrationNode:
             self.IvyInitStop()
         time.sleep(1)
         print('Ivy Calibration Node ready!')
+	# initial value for oldTime
+	global oldTime 
+	oldTime = rospy.get_rostime()
+	global oldX
+	oldX = 0
+	global oldY
+	oldY = 0
+	global oldZ
+	oldZ = 0
 
 
     def IvyInitStop(self):
@@ -47,11 +56,45 @@ class IvyCalibrationNode:
 
 
         """
-        global copterPos
-        copterPos=data
+        global oldTime
+	global oldX
+	global oldY
+	global oldZ
 
-                             #AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
-        self.IvySendRemoteGPS(1,     0,     384202400 + (data.x*10), 79186300 + (data.y*10), 501229700,      0,   0,   0,   0,    0,       0,       0,       0,   0)
+	# offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation across Y and Z)
+	offsetX =  0.601406 * data.x - 0.123752 * data.y
+	offsetY = -0.201549 * data.x + 0.979478 * data.y
+	offsetZ = -0.773103 * data.x + 0.159083 * data.y
+	
+	rospy.loginfo("Offsets %f, %f, %f", offsetX, offsetY, offsetZ)
+
+	# getting time difference between now and last run
+	now = rospy.get_rostime()
+	timediff = 0
+	if( (now.secs - oldTime.secs) == 0):
+		timediff = now.nsecs - oldTime.nsecs
+	else:
+		timediff = 1000000000 + now.nsecs - oldTime.nsecs
+	oldTime = now
+	timediff = timediff / 1000000000.0
+	
+	#rospy.loginfo("timediff float %f", timediff)
+
+	# geting difference for X pos and Y pos and Z pos and calculate speed
+	
+	ecef_xd= (offsetX - oldX) / timediff	
+	ecef_yd= (offsetY - oldY) / timediff	
+	ecef_zd= (offsetZ - oldZ) / timediff	
+	
+	rospy.loginfo("Speeds %f, %f, %f", ecef_xd, ecef_yd, ecef_zd)
+
+	oldX = offsetX
+	oldY = offsetY
+	oldZ = offsetZ
+
+
+                             #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
+        self.IvySendRemoteGPS(1,     0,     384202400 + offsetX, 79186300 + offsetY, 501229700 + offsetZ,      0,   0,   0,   0,  ecef_xd, ecef_yd, ecef_zd,   0,   0)
 
 
     def initRosSub(self):
