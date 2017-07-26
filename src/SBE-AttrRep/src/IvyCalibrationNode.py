@@ -2,7 +2,8 @@
 import rospy
 from ivy.std_api import *
 from std_msgs.msg import String
-from geometry_msgs.msg import Pose2D
+#from geometry_msgs.msg import Pose2D
+from tracking.msg import TaggedPose2D
 import time
 """kill_log resides in the upper directory to this script"""
 import os
@@ -19,6 +20,8 @@ class IvyCalibrationNode:
 
         Should only be called once per session.
         """
+	
+
         try:
             IvyInit('Calibration Node', '', 0)
         except AssertionError:
@@ -33,15 +36,17 @@ class IvyCalibrationNode:
             self.IvyInitStop()
         time.sleep(1)
         print('Ivy Calibration Node ready!')
-	# initial value for oldTime
-	global oldTime 
-	oldTime = rospy.get_rostime()
+	
+        # initial value for oldTime
+	
 	global oldX
 	oldX = 0
 	global oldY
 	oldY = 0
 	global oldZ
 	oldZ = 0
+        global oldTime 
+	oldTime = rospy.get_rostime()
 
 
     def IvyInitStop(self):
@@ -69,7 +74,7 @@ class IvyCalibrationNode:
 	rospy.loginfo("Offsets %f, %f, %f", offsetX, offsetY, offsetZ)
 
 	# getting time difference between now and last run
-	now = rospy.get_rostime()
+	now = data.header.stamp
 	timediff = 0
 	if( (now.secs - oldTime.secs) == 0):
 		timediff = now.nsecs - oldTime.nsecs
@@ -111,8 +116,9 @@ class IvyCalibrationNode:
             print('\nError Initializing ROS:')
             print(str(e))
             raise
-
-        rospy.Subscriber("copters/0/pose", Pose2D, self.handlePos)
+	
+        #rospy.Subscriber("copters/0/pose", Pose2D, self.handlePos)
+	rospy.Subscriber("/copter/blue", TaggedPose2D, self.handlePos)
 
 
     def IvyGetPos(self):
