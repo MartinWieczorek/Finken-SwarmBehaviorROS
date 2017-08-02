@@ -12,8 +12,11 @@ parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0,parentdir)
 import kill_log
 
+# global values
 deg2rad = math.pi / 180
 rad2deg = 180 / math.pi
+lat = 52.138821 * deg2rad
+lon = 11.645634  * deg2rad
 
 class IvyCalibrationNode:
     def __init__(self):
@@ -74,9 +77,9 @@ class IvyCalibrationNode:
 	global tow
 
 	# offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation around Y and Z)
-	offsetX =  0.601406 * data.x - 0.123752 * data.y
-	offsetY = -0.201549 * data.x + 0.979478 * data.y
-	offsetZ = -0.773103 * data.x + 0.159083 * data.y
+	offsetX =  math.cos(lat)*math.cos(lon)*data.x - math.cos(lat)*math.sin(lon)*data.y
+	offsetY = -math.sin(lon)* data.x              + math.cos(lon) * data.y
+	offsetZ = -math.sin(lat)*math.cos(lon)*data.x + math.sin(lat)*math.sin(lon)*data.y
 	
 	#rospy.loginfo("Offsets %f, %f, %f", offsetX, offsetY, offsetZ)
 	rospy.loginfo("Distances %f, %f, %f", offsetX - oldX, offsetY - oldY, offsetZ - oldZ)
@@ -116,8 +119,6 @@ class IvyCalibrationNode:
 	# for Course we need angle (in rad) of LTP.  We get LTP by ECEF and LLA and Rot Mat of ECEF 2 ENU
 
 	# Rot_ecef2enu
-	lat = 52.1205 * deg2rad
-	lon = 11.6276  * deg2rad
 
 	enu_xd = -math.sin(lon)*ecef_xd               + math.cos(lon)*ecef_yd
 	enu_yd = -math.sin(lat)*math.cos(lon)*ecef_xd + (-math.sin(lat)*math.sin(lon)*ecef_yd) + math.cos(lat)*ecef_zd
@@ -126,10 +127,15 @@ class IvyCalibrationNode:
 	course = math.atan2(enu_yd, enu_xd)
 	
 	rospy.loginfo("course %f", course * rad2deg)
+	# course in rad*1e7, [0, 2*Pi]*1e7 (CW/north)
 	course = int(course * 10000000)
 
+	earthRadius = 636485000
+	ecef_magnitude = math.sqrt((384205200 + offsetX)*(384205200 + offsetX) + (79184900 + offsetY)*(79184900 + offsetY) + (501233200 + offsetZ)*(501233200 + offsetZ))
+	hmsl = (ecef_magnitude - earthRadius) / 10 # in mm
+
                              #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
-        self.IvySendRemoteGPS(1,     6,     384202400 + offsetX, 79186300 + offsetY, 501229700 + offsetZ,      0,   0,   0,   0,  ecef_xd, ecef_yd, ecef_zd, tow, course)
+        self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
 
 
     def initRosSub(self):
