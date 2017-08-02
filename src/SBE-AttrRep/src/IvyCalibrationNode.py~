@@ -1,5 +1,6 @@
 #!/usr/bin/python2
 import rospy
+import math
 from ivy.std_api import *
 from std_msgs.msg import String
 #from geometry_msgs.msg import Pose2D
@@ -10,6 +11,9 @@ import os
 parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0,parentdir)
 import kill_log
+
+deg2rad = math.pi / 180
+rad2deg = 180 / math.pi
 
 class IvyCalibrationNode:
     def __init__(self):
@@ -45,6 +49,8 @@ class IvyCalibrationNode:
 	oldY = 0
 	global oldZ
 	oldZ = 0
+	global tow
+	tow = 0
         global oldTime 
 	oldTime = rospy.get_rostime()
 
@@ -65,13 +71,16 @@ class IvyCalibrationNode:
 	global oldX
 	global oldY
 	global oldZ
+	global tow
 
-	# offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation across Y and Z)
+	# offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation around Y and Z)
 	offsetX =  0.601406 * data.x - 0.123752 * data.y
 	offsetY = -0.201549 * data.x + 0.979478 * data.y
 	offsetZ = -0.773103 * data.x + 0.159083 * data.y
 	
 	#rospy.loginfo("Offsets %f, %f, %f", offsetX, offsetY, offsetZ)
+	rospy.loginfo("Distances %f, %f, %f", offsetX - oldX, offsetY - oldY, offsetZ - oldZ)
+
 
 	# getting time difference between now and last run
 	now = data.header.stamp
@@ -91,15 +100,36 @@ class IvyCalibrationNode:
 	ecef_yd= (offsetY - oldY) / timediff	
 	ecef_zd= (offsetZ - oldZ) / timediff	
 	
-	#rospy.loginfo("Speeds %f, %f, %f", ecef_xd, ecef_yd, ecef_zd)
+	rospy.loginfo("Speeds %f, %f, %f", ecef_xd, ecef_yd, ecef_zd)
 
 	oldX = offsetX
 	oldY = offsetY
 	oldZ = offsetZ
 
+	# for TOW
+
+	if (timediff < 1.0):
+		tow += int(timediff * 1000)
+
+
+	# for Course
+	# for Course we need angle (in rad) of LTP.  We get LTP by ECEF and LLA and Rot Mat of ECEF 2 ENU
+
+	# Rot_ecef2enu
+	lat = 52.1205 * deg2rad
+	lon = 11.6276  * deg2rad
+
+	enu_xd = -math.sin(lon)*ecef_xd               + math.cos(lon)*ecef_yd
+	enu_yd = -math.sin(lat)*math.cos(lon)*ecef_xd + (-math.sin(lat)*math.sin(lon)*ecef_yd) + math.cos(lat)*ecef_zd
+	enu_zd =  math.cos(lat)*math.cos(lon)*ecef_xd + math.cos(lat)*math.sin(lon)*ecef_yd    + math.sin(lat)*ecef_zd
+	
+	course = math.atan2(enu_yd, enu_xd)
+	
+	rospy.loginfo("course %f", course * rad2deg)
+	course = int(course * 10000000)
 
                              #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
-        self.IvySendRemoteGPS(1,     0,     384202400 + offsetX, 79186300 + offsetY, 501229700 + offsetZ,      0,   0,   0,   0,  ecef_xd, ecef_yd, ecef_zd,   0,   0)
+        self.IvySendRemoteGPS(1,     6,     384202400 + offsetX, 79186300 + offsetY, 501229700 + offsetZ,      0,   0,   0,   0,  ecef_xd, ecef_yd, ecef_zd, tow, course)
 
 
     def initRosSub(self):
