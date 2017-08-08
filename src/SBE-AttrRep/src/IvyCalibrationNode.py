@@ -15,8 +15,9 @@ import kill_log
 # global values
 deg2rad = math.pi / 180
 rad2deg = 180 / math.pi
-lat = 52.138821 * deg2rad
-lon = 11.645634  * deg2rad
+lat = 52.138821 * deg2rad  # Latitude of FIN
+lon = 11.645634  * deg2rad # Longitude of FIN
+weekInMilliseconds = 604800000
 
 class IvyCalibrationNode:
     def __init__(self):
@@ -110,12 +111,15 @@ class IvyCalibrationNode:
 	oldZ = offsetZ
 
 	# for TOW
+	if (tow == 0):
+		tow = now.secs * 1000 + int(now.nsecs / 1000000)
+		tow = tow % weekInMilliseconds
 
 	if (timediff < 1.0):
 		tow += int(timediff * 1000)
+		tow = tow % weekInMilliseconds
 
-
-	# for Course
+	# tow = now.secs
 	# for Course we need angle (in rad) of LTP.  We get LTP by ECEF and LLA and Rot Mat of ECEF 2 ENU
 
 	# Rot_ecef2enu

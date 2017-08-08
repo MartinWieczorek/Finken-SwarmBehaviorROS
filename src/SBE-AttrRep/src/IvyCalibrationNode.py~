@@ -15,8 +15,9 @@ import kill_log
 # global values
 deg2rad = math.pi / 180
 rad2deg = 180 / math.pi
-lat = 52.138821 * deg2rad
-lon = 11.645634  * deg2rad
+lat = 52.138821 * deg2rad  # Latitude of FIN
+lon = 11.645634  * deg2rad # Longitude of FIN
+weekInSeconds = 604800000
 
 class IvyCalibrationNode:
     def __init__(self):
@@ -110,12 +111,15 @@ class IvyCalibrationNode:
 	oldZ = offsetZ
 
 	# for TOW
+	if (tow == 0):
+		tow = now.secs * 1000 + int(now.nsecs / 1000000)
+		tow = tow % weekInSeconds
 
 	if (timediff < 1.0):
 		tow += int(timediff * 1000)
+		tow = tow % weekInSeconds
 
-
-	# for Course
+	# tow = now.secs
 	# for Course we need angle (in rad) of LTP.  We get LTP by ECEF and LLA and Rot Mat of ECEF 2 ENU
 
 	# Rot_ecef2enu
@@ -132,7 +136,7 @@ class IvyCalibrationNode:
 
 	earthRadius = 636485000
 	ecef_magnitude = math.sqrt((384205200 + offsetX)*(384205200 + offsetX) + (79184900 + offsetY)*(79184900 + offsetY) + (501233200 + offsetZ)*(501233200 + offsetZ))
-	hmsl = (ecef_magnitude - earthRadius) / 10 # in mm
+	hmsl = (ecef_magnitude - earthRadius) * 10 # in mm
 
                              #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
         self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
