@@ -1,8 +1,0 @@
-prefix=/home/finken/Development/paparazzi_SBE/catkin_ws/install
-
-Name: tracking
-Description: Description of tracking
-Version: 0.1.0
-Cflags: -I/home/finken/Development/paparazzi_SBE/catkin_ws/install/include
-Libs: -L/home/finken/Development/paparazzi_SBE/catkin_ws/install/lib 
-Requires: std_msgs message_runtime

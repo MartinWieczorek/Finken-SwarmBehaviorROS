@@ -1,9 +1,0 @@
-\subsubsection parameters ROS parameters
-
-Reads and maintains the following parameters on the ROS server
-
-- \b "~roi_size" : \b [int] Size of the Region of Interest min: 0, default: 20, max: 100
-- \b "~expected_leds" : \b [int] Number of leds to track min: 0, default: 3, max: 100
-- \b "~debug_window" : \b [bool] Activates a Debug Windows in OpenCV min: False, default: False, max: True
-- \b "~treshold" : \b [int] Treshold of brightness of the RoI to detect marker min: 0, default: 4, max: 100
-

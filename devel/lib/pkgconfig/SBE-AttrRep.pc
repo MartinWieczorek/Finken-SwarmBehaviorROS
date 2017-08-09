@@ -1,8 +1,0 @@
-prefix=/home/finken/Development/paparazzi_SBE/catkin_ws/devel
-
-Name: SBE-AttrRep
-Description: Description of SBE-AttrRep
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/finken/Development/paparazzi_SBE/catkin_ws/devel/lib 
-Requires: 
