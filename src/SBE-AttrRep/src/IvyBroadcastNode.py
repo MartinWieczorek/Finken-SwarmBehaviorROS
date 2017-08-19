@@ -38,7 +38,7 @@ class IvyBroadcastNode:
 	print(type(data))
 	print(data)
 	array = data.split(" ")
-	copterID = int(array[0])
+	AC_ID = int(array[0])
 	ins_x = int(array[2])
 	ins_y = int(array[3])
 	ins_z = int(array[4])
@@ -48,7 +48,7 @@ class IvyBroadcastNode:
 	ins_xdd = int(array[8])
 	ins_ydd = int(array[9])
 	ins_zdd = int(array[10])
-	print(copterID, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
+	print(AC_ID, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
 	self.IvySendINSBroadcast(AC_ID, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
 
     def IvyInitStop(self):
