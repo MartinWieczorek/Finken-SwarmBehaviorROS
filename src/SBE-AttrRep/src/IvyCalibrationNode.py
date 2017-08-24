@@ -141,6 +141,8 @@ class IvyCalibrationNode:
                              #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
         self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
 
+	#just for tests
+	self.IvySendINSBroadcast(1, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0)
 
     def initRosSub(self):
         """ Initializes the ROS subscriber.
@@ -224,7 +226,11 @@ class IvyCalibrationNode:
         IvySendMsg('dl REMOTE_GPS %d %d %d %d %d %d %d %d %d %d %d %d %d %d' %
                     (AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
                     ))
-
+	
+    def IvySendINSBroadcast(self, AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd):
+        IvySendMsg('dl COPTER_INS %d %d %d %d %d %d %d %d %d %d %d' %
+                    (AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd
+                    ))
 
 
     def IvySendUnKill(self, AC_ID):

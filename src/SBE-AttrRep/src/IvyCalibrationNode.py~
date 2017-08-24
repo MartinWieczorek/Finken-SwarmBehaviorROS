@@ -17,7 +17,7 @@ deg2rad = math.pi / 180
 rad2deg = 180 / math.pi
 lat = 52.138821 * deg2rad  # Latitude of FIN
 lon = 11.645634  * deg2rad # Longitude of FIN
-weekInSeconds = 604800000
+weekInMilliseconds = 604800000
 
 class IvyCalibrationNode:
     def __init__(self):
@@ -77,6 +77,8 @@ class IvyCalibrationNode:
 	global oldZ
 	global tow
 
+	rospy.loginfo("quality %f", data.quality)
+
 	# offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation around Y and Z)
 	offsetX =  math.cos(lat)*math.cos(lon)*data.x - math.cos(lat)*math.sin(lon)*data.y
 	offsetY = -math.sin(lon)* data.x              + math.cos(lon) * data.y
@@ -113,11 +115,11 @@ class IvyCalibrationNode:
 	# for TOW
 	if (tow == 0):
 		tow = now.secs * 1000 + int(now.nsecs / 1000000)
-		tow = tow % weekInSeconds
+		tow = tow % weekInMilliseconds
 
 	if (timediff < 1.0):
 		tow += int(timediff * 1000)
-		tow = tow % weekInSeconds
+		tow = tow % weekInMilliseconds
 
 	# tow = now.secs
 	# for Course we need angle (in rad) of LTP.  We get LTP by ECEF and LLA and Rot Mat of ECEF 2 ENU
@@ -141,6 +143,8 @@ class IvyCalibrationNode:
                              #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
         self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
 
+	#just for tests
+	self.IvySendINSBroadcast(1, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0)
 
     def initRosSub(self):
         """ Initializes the ROS subscriber.
@@ -224,7 +228,11 @@ class IvyCalibrationNode:
         IvySendMsg('dl REMOTE_GPS %d %d %d %d %d %d %d %d %d %d %d %d %d %d' %
                     (AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
                     ))
-
+	
+    def IvySendINSBroadcast(self, AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd):
+        IvySendMsg('dl COPTER_INS %d %d %d %d %d %d %d %d %d %d %d' %
+                    (AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd
+                    ))
 
 
     def IvySendUnKill(self, AC_ID):

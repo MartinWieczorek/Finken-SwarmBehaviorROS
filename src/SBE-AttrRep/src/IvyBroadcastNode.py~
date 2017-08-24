@@ -8,6 +8,9 @@ parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.sys.path.insert(0,parentdir)
 import kill_log
 
+# list of copters that send INS data to this node, that's why we publish INS data from other copters to them.
+signed_copters = []
+
 class IvyBroadcastNode:
     def __init__(self):
         self.myKillLog = kill_log.KillLog()
@@ -34,11 +37,9 @@ class IvyBroadcastNode:
 	IvyBindMsg(self.handleINSdata, '(.* INS .*)')
 
     def handleINSdata(self,agent, data):
-	print("got INS data")
-	print(type(data))
-	print(data)
+	global signed_copters
 	array = data.split(" ")
-	AC_ID = int(array[0])
+	copter_id = int(array[0])
 	ins_x = int(array[2])
 	ins_y = int(array[3])
 	ins_z = int(array[4])
@@ -48,8 +49,15 @@ class IvyBroadcastNode:
 	ins_xdd = int(array[8])
 	ins_ydd = int(array[9])
 	ins_zdd = int(array[10])
-	print(AC_ID, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
-	self.IvySendINSBroadcast(AC_ID, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
+	if copter_id not in signed_copters:
+		signed_copters.append(copter_id)
+	print(signed_copters)
+	print(signed_copters, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
+	for ac_id in signed_copters:
+		if (ac_id != copter_id):
+			print("Sending to ", ac_id)
+			self.IvySendINSBroadcast(ac_id, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)		
+	
 
     def IvyInitStop(self):
         """Stops the Ivy Server.
@@ -121,9 +129,9 @@ class IvyBroadcastNode:
                     (AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
                     ))
 
-    def IvySendINSBroadcast(self, AC_ID, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd):
-        IvySendMsg('dl COPTER_INS %d %d %d %d %d %d %d %d %d %d' %
-                    (AC_ID, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd
+    def IvySendINSBroadcast(self, AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd):
+        IvySendMsg('dl COPTER_INS %d %d %d %d %d %d %d %d %d %d %d' %
+                    (AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd
                     ))
 
 
