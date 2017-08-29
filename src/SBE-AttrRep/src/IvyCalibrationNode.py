@@ -142,7 +142,7 @@ class IvyCalibrationNode:
         self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
 
 	#just for tests
-	self.IvySendINSBroadcast(1, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0)
+	self.IvySendINSBroadcast(1, 2, 35, 53, 14, 0, 0, 0, 0, 0, 0)
 
     def initRosSub(self):
         """ Initializes the ROS subscriber.

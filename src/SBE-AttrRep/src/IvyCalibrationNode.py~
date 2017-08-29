@@ -77,8 +77,6 @@ class IvyCalibrationNode:
 	global oldZ
 	global tow
 
-	rospy.loginfo("quality %f", data.quality)
-
 	# offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation around Y and Z)
 	offsetX =  math.cos(lat)*math.cos(lon)*data.x - math.cos(lat)*math.sin(lon)*data.y
 	offsetY = -math.sin(lon)* data.x              + math.cos(lon) * data.y
