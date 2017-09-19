@@ -139,10 +139,12 @@ class IvyCalibrationNode:
 	hmsl = (ecef_magnitude - earthRadius) * 10 # in mm
 
                              #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
-        self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
+        self.IvySendRemoteGPS(2,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
+	#self.IvySendRemoteGPS(1,     6,     384205200, 79184900 , 501233200 ,      0,   0,   0,   hmsl, 0, 0, 0, tow, course)
 
 	#just for tests
-	self.IvySendINSBroadcast(1, 2, 35, 53, 14, 0, 0, 0, 0, 0, 0)
+	self.IvySendINSBroadcast(2, 2, 35, 53, 14, 0, 0, 0, 0, 0, 0)
+	#self.IvySendINSBroadcast(1, 2, 1500, 1300, 14, 0, 0, 0, 0, 0, 0)
 
     def initRosSub(self):
         """ Initializes the ROS subscriber.
