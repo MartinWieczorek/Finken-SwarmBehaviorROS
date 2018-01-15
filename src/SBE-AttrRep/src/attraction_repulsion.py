@@ -5,6 +5,7 @@ import math
 import roslib; roslib.load_manifest('visualization_marker_tutorials')
 from visualization_msgs.msg import Marker
 from visualization_msgs.msg import MarkerArray
+from tracking.msg import TaggedPose2D
 
 publisher = rospy.Publisher('copter_1_Marker_array' , MarkerArray, queue_size=10)
 
@@ -103,6 +104,7 @@ def calcForce(copterPos0, copterPos1):
     rospy.loginfo("Fx= %f , Fy= %f", Fx, Fy)
 
     rospy.loginfo("distance %f SafeD %f force F %f ", dist,d,math.sqrt((Fx * Fx) + (Fy * Fy)))
+    #TO-DO Scaling of Fx and Fy
     return [Fx,Fy]
     
 
@@ -110,18 +112,26 @@ def copter0(data):
     global copterPos0
     global copterPos1
     copterPos0 = data
+    copterPos0 = scaleToMeter(copterPos0)
     force = calcForce(copterPos1, copterPos0)
     marker_calc(copterPos0, force, 'copter0')
-    rospy.loginfo("Copter0")
+    rospy.loginfo("in Copter0")
 
 def copter1(data):
     global copterPos0
     global copterPos1
     copterPos1 = data
+    copterPos1 = scaleToMeter(copterPos1)
     force = calcForce(copterPos0, copterPos1)
     marker_calc(copterPos1, force, 'copter1')
-    rospy.loginfo("Copter1")
+    rospy.loginfo("in Copter1")
     
+
+def scaleToMeter(copterPos):
+    copterPos.x = copterPos.x/100.0
+    copterPos.y = copterPos.y/100.0
+    return copterPos
+
 def listener():
 
     # In ROS, nodes are uniquely named. If two nodes with the same
@@ -130,9 +140,8 @@ def listener():
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
     rospy.init_node('AttrRep', anonymous=True)
-
-    rospy.Subscriber("copters/0/pose", geometry_msgs.msg.Pose2D, copter0)
-    rospy.Subscriber("copters/1/pose", geometry_msgs.msg.Pose2D, copter1)
+    rospy.Subscriber("/copter/blue", TaggedPose2D, copter0)
+    rospy.Subscriber("copter/blue", geometry_msgs.msg.Pose2D, copter1)
     #time.sleep(0.5)
 	
     # spin() simply keeps python from exiting until this node is stopped

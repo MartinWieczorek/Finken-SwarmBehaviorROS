@@ -15,9 +15,10 @@ try:
         pass
         #print('test')
 except KeyboardInterrupt:
-    print('\nROS initialization canceled by user')
+    print('\nROS initialization canceled by user in ivySendCopterPose.py')
 
 comm.IvyInitStop()
+
 
 
 

@@ -51,7 +51,6 @@ class IvyBroadcastNode:
 	ins_zdd = int(array[10])
 	if copter_id not in signed_copters:
 		signed_copters.append(copter_id)
-	print(signed_copters)
 	print(signed_copters, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
 	for ac_id in signed_copters:
 		if (ac_id != copter_id):
@@ -72,7 +71,7 @@ class IvyBroadcastNode:
         try:
             return copterPos
         except NameError as e:
-            print("CopterPos not yed defined! (No data from ROS?):")
+            print("CopterPos not yet defined! (No data from ROS?):")
             print(str(e))
 
     def IvyGetPosList(self):

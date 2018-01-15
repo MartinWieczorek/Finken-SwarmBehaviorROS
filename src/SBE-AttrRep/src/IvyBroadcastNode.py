@@ -71,7 +71,7 @@ class IvyBroadcastNode:
         try:
             return copterPos
         except NameError as e:
-            print("CopterPos not yed defined! (No data from ROS?):")
+            print("CopterPos not yet defined! (No data from ROS?):")
             print(str(e))
 
     def IvyGetPosList(self):
