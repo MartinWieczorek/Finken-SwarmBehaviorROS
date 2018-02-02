@@ -38,6 +38,7 @@ class IvyBroadcastNode:
 
     def handleINSdata(self,agent, data):
 	global signed_copters
+        self.IvySendGPSBroadcast(3, 5, 384205230, 79184980, 501233200, 0, 0, 0)
 	array = data.split(" ")
 	copter_id = int(array[0])
 	ins_x = int(array[2])
@@ -133,6 +134,10 @@ class IvyBroadcastNode:
                     (AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd
                     ))
 
+    def IvySendGPSBroadcast(self, AC_ID, copter_id, gps_x, gps_y, gps_z, gps_xd, gps_yd, gps_zd):
+        IvySendMsg('dl COPTER_GPS %d %d %d %d %d %d %d %d' %
+                    (AC_ID, copter_id, gps_x, gps_y, gps_z, gps_xd, gps_yd, gps_zd
+                    ))
 
     def IvySendUnKill(self, AC_ID):
         """Sends an unkill message to the aircraft
@@ -141,7 +146,6 @@ class IvyBroadcastNode:
         IvySendMsg('dl KILL %d 0' %
                     (AC_ID
                     ))
-
 
 
     def IvySendSwitchBlock(self, AC_ID, block_ID):

@@ -172,6 +172,11 @@ class IvyCalibrationNode:
 	
 	rospy.loginfo("course %f", course)
 	# course in rad*1e7, [0, 2*Pi]*1e7 (CW/north)
+	rospy.loginfo("data-x %f  data-y %f", data.x, data.y)
+	rospy.loginfo("data-x %s  data-y %s", type(data.x), type(data.y))
+	rospy.loginfo("data-x %d  data-y %d", int(384205200 + data.x), int(79184900 + data.y))
+	rospy.loginfo("data-x %s  data-y %s", type(int(384205200 + data.x)), type(int(79184900 + data.y)))
+
 	course = int(course * 10000000)
 
 	earthRadius = 636485000
@@ -183,7 +188,12 @@ class IvyCalibrationNode:
                              #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
         #self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      gps_lat,   gps_lon,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
 	self.IvySendRemoteGPS(3,     6,     384205200 + data.x , 79184900 + data.y, 501233200 + 60,      gps_lat,   gps_lon,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
+	#self.IvySendRemoteGPS(3,     6,     384205200, 79184900, 501233200,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
 	#self.IvySendRemoteGPS(1,     6,     384205200, 79184900 , 501233200 ,      0,   0,   0,   hmsl, 0, 0, 0, tow, course)
+
+        # loop for sending GPS for swarmbehaviour to all other copters
+	#IvySendGPSBroadcast(AC_ID, copter_id, gps_x, gps_y, gps_z, gps_xd, gps_yd, gps_zd)
+
 
 	#send camera heading in degree
 	self.IvySendCameraTheta(3, 0, data.theta + 185)
@@ -275,13 +285,19 @@ class IvyCalibrationNode:
                     (AC_ID, dummy, theta) )
 
     def IvySendRemoteGPS(self, AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course):
+	rospy.loginfo("gps-x %s  gps-y %s", (ecef_x), (ecef_y))
         IvySendMsg('dl REMOTE_GPS %d %d %d %d %d %d %d %d %d %d %d %d %d %d' %
-                    (AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
+                    (AC_ID, numsv, int(ecef_x), int(ecef_y), int(ecef_z), lat, lon, alt, hmsl, int(ecef_xd), int(ecef_yd), int(ecef_zd), tow, course
                     ))
 	
     def IvySendINSBroadcast(self, AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd):
         IvySendMsg('dl COPTER_INS %d %d %d %d %d %d %d %d %d %d %d' %
                     (AC_ID, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd
+                    ))
+
+    def IvySendGPSBroadcast(self, AC_ID, copter_id, gps_x, gps_y, gps_z, gps_xd, gps_yd, gps_zd):
+        IvySendMsg('dl COPTER_GPS %d %d %d %d %d %d %d %d' %
+                    (AC_ID, copter_id, gps_x, gps_y, gps_z, gps_xd, gps_yd, gps_zd
                     ))
 
 
