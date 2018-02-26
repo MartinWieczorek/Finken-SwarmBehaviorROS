@@ -39,24 +39,24 @@ class IvyBroadcastNode:
     def handleINSdata(self,agent, data):
 	global signed_copters
         self.IvySendGPSBroadcast(3, 5, 384205230, 79184980, 501233200, 0, 0, 0)
-	array = data.split(" ")
-	copter_id = int(array[0])
-	ins_x = int(array[2])
-	ins_y = int(array[3])
-	ins_z = int(array[4])
-	ins_xd = int(array[5])
-	ins_yd = int(array[6])
-	ins_zd = int(array[7])
-	ins_xdd = int(array[8])
-	ins_ydd = int(array[9])
-	ins_zdd = int(array[10])
-	if copter_id not in signed_copters:
-		signed_copters.append(copter_id)
-	print(signed_copters, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
-	for ac_id in signed_copters:
-		if (ac_id != copter_id):
-			print("Sending to ", ac_id)
-			self.IvySendINSBroadcast(ac_id, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)		
+	#array = data.split(" ")
+	#copter_id = int(array[0])
+	#ins_x = int(array[2])
+	#ins_y = int(array[3])
+	#ins_z = int(array[4])
+	#ins_xd = int(array[5])
+	#ins_yd = int(array[6])
+	#ins_zd = int(array[7])
+	#ins_xdd = int(array[8])
+	#ins_ydd = int(array[9])
+	#ins_zdd = int(array[10])
+	#if copter_id not in signed_copters:
+	#	signed_copters.append(copter_id)
+	#print(signed_copters, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)
+	#for ac_id in signed_copters:
+	#	if (ac_id != copter_id):
+	#		print("Sending to ", ac_id)
+	#		self.IvySendINSBroadcast(ac_id, copter_id, ins_x, ins_y, ins_z, ins_xd, ins_yd, ins_zd, ins_xdd, ins_ydd, ins_zdd)		
 	
 
     def IvyInitStop(self):

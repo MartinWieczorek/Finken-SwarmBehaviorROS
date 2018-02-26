@@ -21,6 +21,16 @@ gps_lat = 52.13882 * 10000000
 gps_lon = 11.645634 * 10000000
 weekInMilliseconds = 604800000
 
+class OldData:
+    def __init__(self):
+	self.time = rospy.get_rostime()
+	self.data = TaggedPose2D()
+	self.xPos = 0
+	self.yPos = 0
+	self.zPos = 0
+	self.tow = 0
+	self.course = 0.0
+
 class IvyCalibrationNode:
     def __init__(self):
         self.myKillLog = kill_log.KillLog()
@@ -48,20 +58,24 @@ class IvyCalibrationNode:
         print('Ivy Calibration Node ready!')
 	
         # initial value for oldTime
-	
-	global oldX
-	oldX = 0
-	global oldY
-	oldY = 0
-	global oldZ
-	oldZ = 0
-	global tow
-	tow = 0
-        global oldTime 
-	oldTime = rospy.get_rostime()
-	global oldData
-	global course
-	course = 0.0
+	global oldDataBlue
+	oldDataBlue = OldData()
+	global oldDataCyan
+	oldDataCyan = OldData()	
+
+	#global oldX
+	#oldX = 0
+	#global oldY
+	#oldY = 0
+	#global oldZ
+	#oldZ = 0
+	#global tow
+	#tow = 0
+        #global oldTime 
+	#oldTime = rospy.get_rostime()
+	#global oldData
+	#global course
+	#course = 0.0
 
         rospy.spin()
         print("after ctrl + c")
@@ -75,109 +89,88 @@ class IvyCalibrationNode:
         IvyStop()
 
 
-    def handlePos(self, data):
+    def handlePos(self, data, ID):
         """ Callback for the ROS subscriber.
 
 
         """
-        global oldTime
-	global oldData
-	global oldX
-	global oldY
-	global oldZ
-	global tow
-	global course
+	global oldDataBlue
+	global oldDataCyan        
+	#global oldTime
+	#global oldData
+	#global oldX
+	#global oldY
+	#global oldZ
+	#global tow
+	#global course
+
+	oldData = OldData()	
+	
+	if (ID == 3):
+		oldData = oldDataBlue
+	elif (ID == 7):
+		oldData = oldDataCyan	
 
 	# offsets for camera positions
 	offsetX =  data.x
 	offsetY =  data.y
 	offsetZ =  0
 
-	# offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation around Y and Z)
-	#offsetX =  math.cos(lat)*math.cos(lon)*data.x - math.cos(lat)*math.sin(lon)*data.y
-	#offsetY =  math.sin(lon)* data.x              + math.cos(lon) * data.y
-	#offsetZ = -math.sin(lat)*math.cos(lon)*data.x + math.sin(lat)*math.sin(lon)*data.y
-
-	## offsets for Latitude = 52.1205 and Longitude = 11.6276 (Rotation around X and Z)
-	#offsetX =  math.cos(lon)*data.x                - math.sin(lon)*data.y
-	#offsetY =  math.cos(lat)*math.sin(lon)* data.x + math.cos(lat)*math.cos(lon) * data.y 
-	#offsetZ =  math.sin(lat)*math.sin(lon)*data.x  + math.sin(lat)*math.cos(lon) * data.y
-	
-	#rospy.loginfo("cameraPos %f, %f", data.x, data.y)
-	#rospy.loginfo("Offsets %f, %f, %f", offsetX, offsetY, offsetZ)
-	#rospy.loginfo("Distances %f, %f, %f", offsetX - oldX, offsetY - oldY, offsetZ - oldZ)
-
-
 	# getting time difference between now and last run
 	now = data.header.stamp
 	timediff = 0
-	if( (now.secs - oldTime.secs) == 0):
-		timediff = now.nsecs - oldTime.nsecs
+	if( (now.secs - oldData.time.secs) == 0):
+		timediff = now.nsecs - oldData.time.nsecs
 	else:
-		timediff = 1000000000 + now.nsecs - oldTime.nsecs
-	oldTime = now
+		timediff = 1000000000 + now.nsecs - oldData.time.nsecs
+	oldData.time = now
 	timediff = timediff / 1000000000.0
 	
 	#rospy.loginfo("timediff float %f", timediff)
 
 	# geting difference for X pos and Y pos and Z pos and calculate speed
 	
-	ecef_xd= (offsetX - oldX) / timediff	
-	ecef_yd= (offsetY - oldY) / timediff	
-	ecef_zd= (offsetZ - oldZ) / timediff	
+	ecef_xd= (offsetX - oldData.xPos) / timediff	
+	ecef_yd= (offsetY - oldData.yPos) / timediff	
+	ecef_zd= (offsetZ - oldData.zPos) / timediff	
 	
 	#rospy.loginfo("Speeds %f, %f, %f", ecef_xd, ecef_yd, ecef_zd)
 
-	oldX = offsetX
-	oldY = offsetY
-	oldZ = offsetZ
+	oldData.xPos = offsetX
+	oldData.yPos = offsetY
+	oldData.zPos = offsetZ
 
 	# for TOW
-	if (tow == 0):
-		tow = now.secs * 1000 + int(now.nsecs / 1000000)
-		tow = tow % weekInMilliseconds
+	if (oldData.tow == 0):
+		oldData.tow = now.secs * 1000 + int(now.nsecs / 1000000)
+		oldData.tow = oldData.tow % weekInMilliseconds
 
 	if (timediff < 1.0):
-		tow += int(timediff * 1000)
-		tow = tow % weekInMilliseconds
+		oldData.tow += int(timediff * 1000)
+		oldData.tow = oldData.tow % weekInMilliseconds
 
-	# tow = now.secs
-	# for Course we need angle (in rad) of LTP.  We get LTP by ECEF and LLA and Rot Mat of ECEF 2 ENU
-
-	# Rot_ecef2enu
-
-	#enu_xd = -math.sin(lon)*ecef_xd               + math.cos(lon)*ecef_yd
-	#enu_yd = -math.sin(lat)*math.cos(lon)*ecef_xd + (-math.sin(lat)*math.sin(lon)*ecef_yd) + math.cos(lat)*ecef_zd
-	#enu_zd =  math.cos(lat)*math.cos(lon)*ecef_xd + math.cos(lat)*math.sin(lon)*ecef_yd    + math.sin(lat)*ecef_zd
+	rospy.loginfo("ID %d !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", ID)
 	
-	#course = math.atan2(enu_yd, enu_xd)	
-
-	rospy.loginfo("type %s", type(data))
-	
-	previousCourse = course	
+	previousCourse = oldData.course	
 
 	try:
-		distX = data.x - oldData.x
-		distY = data.y - oldData.y
+		distX = data.x - oldData.xPos
+		distY = data.y - oldData.yPos
 		dist = math.sqrt(distX*distX + distY*distY)		
 	
-		course = math.acos(distX / dist)
+		oldData.course = math.acos(distX / dist)
 
 		if(distY < 0):
-			course = 2*math.pi - course
+			oldData.course = 2*math.pi - oldData.course
 	except:
-		oldData = data
+		oldData.data = data
 		rospy.loginfo("error olddata")
-		course = previousCourse/10000000.0
+		oldData.course = previousCourse/10000000.0
 	
-	rospy.loginfo("course %f", course)
+	rospy.loginfo("course %f", oldData.course)
 	# course in rad*1e7, [0, 2*Pi]*1e7 (CW/north)
-	rospy.loginfo("data-x %f  data-y %f", data.x, data.y)
-	rospy.loginfo("data-x %s  data-y %s", type(data.x), type(data.y))
-	rospy.loginfo("data-x %d  data-y %d", int(384205200 + data.x), int(79184900 + data.y))
-	rospy.loginfo("data-x %s  data-y %s", type(int(384205200 + data.x)), type(int(79184900 + data.y)))
 
-	course = int(course * 10000000)
+	oldData.course = int(oldData.course * 10000000)
 
 	earthRadius = 636485000
 	ecef_magnitude = math.sqrt((384205200 + offsetX)*(384205200 + offsetX) + (79184900 + offsetY)*(79184900 + offsetY) + (501233200 + offsetZ)*(501233200 + offsetZ))
@@ -185,23 +178,24 @@ class IvyCalibrationNode:
         #test value
 	hmsl = 1000;
 
-                             #AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
-        #self.IvySendRemoteGPS(1,     6,     384205200 + offsetX, 79184900 + offsetY, 501233200 + offsetZ,      gps_lat,   gps_lon,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
-	#self.IvySendRemoteGPS(3,     6,     384205200 + data.x , 79184900 + data.y, 501233200 + 60,      gps_lat,   gps_lon,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
-	self.IvySendRemoteGPS(3,     6,     384205200, 79184900, 501233200,      0,   0,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, tow, course)
-	#self.IvySendRemoteGPS(1,     6,     384205200, 79184900 , 501233200 ,      0,   0,   0,   hmsl, 0, 0, 0, tow, course)
+	if (ID == 3):
+        	#AC_ID, numsv, ecef_x, ecef_y, ecef_z, 					     lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course
+		self.IvySendRemoteGPS(ID,     6,     384205200 + data.x , 79184900 + data.y, 501233200 + 60,      gps_lat,   gps_lon,   0,   hmsl,  ecef_xd, ecef_yd, ecef_zd, oldData.tow, oldData.course)
+
+	rospy.loginfo("ID :%d   gps-x %s  gps-y %s", ID, 384205200 + data.x, 79184900 + data.y)
 
         # loop for sending GPS for swarmbehaviour to all other copters
 	#IvySendGPSBroadcast(AC_ID, copter_id, gps_x, gps_y, gps_z, gps_xd, gps_yd, gps_zd)
-
+	#if (ID == 3):	
+	#	self.IvySendGPSBroadcast(7, 3, 384205200 + data.x, 79184900 + data.y, 501233200 + 60, ecef_xd, ecef_yd, ecef_zd)
+	#el
+	if (ID == 7):
+		self.IvySendGPSBroadcast(3, 7, 384205200 + data.x, 79184900 + data.y, 501233200 + 60, ecef_xd, ecef_yd, ecef_zd)
 
 	#send camera heading in degree
 	self.IvySendCameraTheta(3, 0, data.theta + 185)
 
-	#just for tests a virtual copter 2 sends its position to copter 1
-	#self.IvySendINSBroadcast(1, 2, 35, 53, 14, 0, 0, 0, 0, 0, 0)
-	#self.IvySendINSBroadcast(1, 2, 1500, 1300, 14, 0, 0, 0, 0, 0, 0)
-	oldData = data
+	oldData.data = data
 
     def initRosSub(self):
         """ Initializes the ROS subscriber.
@@ -219,7 +213,11 @@ class IvyCalibrationNode:
             raise
 	
         #rospy.Subscriber("copters/0/pose", Pose2D, self.handlePos)
-	rospy.Subscriber("/copter/blue", TaggedPose2D, self.handlePos)
+	#rospy.Subscriber("/copter/blue", TaggedPose2D, self.handlePos, 3)
+	rospy.Subscriber("/copter/magenta", TaggedPose2D, self.handlePos, 3)
+	rospy.Subscriber("/copter/cyan", TaggedPose2D, self.handlePos, 7)
+	#rospy.Subscriber("/copter/yellow", TaggedPose2D, self.handlePos, 7)
+	#rospy.Subscriber("/copter/white", TaggedPose2D, self.handlePos, 7)
 
 
     def IvyGetPos(self):
@@ -285,7 +283,7 @@ class IvyCalibrationNode:
                     (AC_ID, dummy, theta) )
 
     def IvySendRemoteGPS(self, AC_ID, numsv, ecef_x, ecef_y, ecef_z, lat, lon, alt, hmsl, ecef_xd, ecef_yd, ecef_zd, tow, course):
-	rospy.loginfo("gps-x %s  gps-y %s", (ecef_x), (ecef_y))
+	#rospy.loginfo("gps-x %s  gps-y %s", (ecef_x), (ecef_y))
         IvySendMsg('dl REMOTE_GPS %d %d %d %d %d %d %d %d %d %d %d %d %d %d' %
                     (AC_ID, numsv, int(ecef_x), int(ecef_y), int(ecef_z), lat, lon, alt, hmsl, int(ecef_xd), int(ecef_yd), int(ecef_zd), tow, course
                     ))
