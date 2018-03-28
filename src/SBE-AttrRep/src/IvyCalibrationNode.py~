@@ -21,6 +21,19 @@ gps_lat = 52.13882 * 10000000
 gps_lon = 11.645634 * 10000000
 weekInMilliseconds = 604800000
 
+# evaluation data
+virt_pos_x = 384205230
+virt_pos_y = 79185080
+virt_pos_z = 501233200
+
+wall_top_x = 384205148 
+wall_bottom_x = 384205341 
+wall_left_y = 79184823
+wall_right_y = 79185130 
+safe_dist = 40
+wall_hit_count = 0
+wall_was_hit = False
+
 class OldData:
     def __init__(self):
 	self.time = rospy.get_rostime()
@@ -95,7 +108,9 @@ class IvyCalibrationNode:
 
         """
 	global oldDataBlue
-	global oldDataCyan        
+	global oldDataCyan 
+	global wall_hit_count      
+	global wall_was_hit 
 	#global oldTime
 	#global oldData
 	#global oldX
@@ -193,9 +208,30 @@ class IvyCalibrationNode:
 		self.IvySendGPSBroadcast(3, 7, 384205200 + data.x, 79184900 + data.y, 501233200 + 60, ecef_xd, ecef_yd, ecef_zd)
 
 	#send camera heading in degree
-	self.IvySendCameraTheta(3, 0, data.theta + 185)
+	self.IvySendCameraTheta(ID, 0, data.theta + 185)
 
 	oldData.data = data
+
+	# position for virtual copter
+	self.IvySendGPSBroadcast(3, 5, virt_pos_x, virt_pos_y, virt_pos_z, 0, 0, 0)
+	
+	# sending evaluation data
+	# dist to virt copter
+	dist_x = virt_pos_x - (384205200 + data.x)
+	dist_y = virt_pos_y - (79184900 + data.y)
+	dist_to_virtual = math.sqrt( dist_x*dist_x + dist_y*dist_y)
+
+	# check wall hit
+	if ( ((384205200 + data.x) < (wall_top_x + safe_dist)) | ((384205200 + data.x) > (wall_bottom_x - safe_dist))
+		| ((79184900 + data.y) < (wall_left_y + safe_dist)) | ((79184900 + data.y) > (wall_right_y - safe_dist))):
+		if(wall_was_hit == False):
+			wall_hit_count =  wall_hit_count + 1
+		wall_was_hit = True
+	else:
+		wall_was_hit = False
+	
+	
+	IvySendMsg('3 SWARM_EVALUATION %f %d' % (dist_to_virtual, wall_hit_count))
 
     def initRosSub(self):
         """ Initializes the ROS subscriber.
@@ -213,9 +249,9 @@ class IvyCalibrationNode:
             raise
 	
         #rospy.Subscriber("copters/0/pose", Pose2D, self.handlePos)
-	#rospy.Subscriber("/copter/blue", TaggedPose2D, self.handlePos, 3)
-	rospy.Subscriber("/copter/magenta", TaggedPose2D, self.handlePos, 3)
-	rospy.Subscriber("/copter/cyan", TaggedPose2D, self.handlePos, 7)
+	rospy.Subscriber("/copter/blue", TaggedPose2D, self.handlePos, 3)
+	#rospy.Subscriber("/copter/magenta", TaggedPose2D, self.handlePos, 3)
+	#rospy.Subscriber("/copter/cyan", TaggedPose2D, self.handlePos, 7)
 	#rospy.Subscriber("/copter/yellow", TaggedPose2D, self.handlePos, 7)
 	#rospy.Subscriber("/copter/white", TaggedPose2D, self.handlePos, 7)
 

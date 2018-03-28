@@ -38,7 +38,9 @@ class IvyBroadcastNode:
 
     def handleINSdata(self,agent, data):
 	global signed_copters
-        #self.IvySendGPSBroadcast(3, 5, 384205230, 79184980, 501233200, 0, 0, 0)
+	# (toid, asid)
+        self.IvySendGPSBroadcast(3, 5, 384205230, 79184980, 501233200, 0, 0, 0)
+	IvySendMsg('3 COPTER_FORCE 0.5 0.3')
 	#array = data.split(" ")
 	#copter_id = int(array[0])
 	#ins_x = int(array[2])
